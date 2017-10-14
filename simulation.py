@@ -8,7 +8,7 @@ import pyscreenshot as ImageGrab
 #Replace the ___ in eng.___ with the function cum file name of the matlab file that runs the dynamics simulation
 # and returns the simulation data over time.
 
-ret = eng.class1dynamics_test() # object invoking the matlab file
+ret = eng.class_k_prism_test() # object invoking the matlab file
 numofframes = len(ret["S"][1][1])
 nb = len(ret["B"][1]) # no of bars
 ns = len(ret["S"][1]) # no of strings
@@ -41,7 +41,8 @@ def simulate():
         if dt<nf-1:
             rate(1/(ret["dt"][0][dt+1]-ret["dt"][0][dt]))
             #print ret["dt"][0][0]
-
+            #rate(1/0.5)
+            pass
     b.text = 'Restart Again'
 w = window(menus=True, title='Tensegrity World', width=1020, height=728)
 scene = display(window=w, width=1020, height=728, background=(0.184,0.5764,0.5843))

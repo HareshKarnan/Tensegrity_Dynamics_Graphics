@@ -1,5 +1,5 @@
 function [CN,CNd] = barlengthcorrect(N,Nd,Cb,b0)
-q=0.1;
+q=0.5;
 B=N*Cb';
 Bd = Nd*Cb';
 for i=1:size(Cb,1)
@@ -11,9 +11,9 @@ for i=1:size(Cb,1)
     % search for the minimum value in the cost function
     for j=1:numel(x)
     v = pinv(x(j).*eye(size(Cb,1))+Bd(:,i)*Bd(:,i)')*q*b0(i,i)*B(:,i);
-    p = b0(i,i)*v-B(:,i);
-    r = -v*v'*Bd(:,i);
-    J(j) = q*p'*p+r'*r;
+    p = b0(i,i)*v-B(:,i)
+    r = -v*v'*Bd(:,i)
+    J(j) = q*norm(p)^2+norm(r)^2;
     end
     [Jval,Jpos] = min(J);
     x = x(Jpos);

@@ -32,7 +32,7 @@ for i = 1:size(y,1)
     Strace(:,:,i) = Nt*Cs';
     RBtrace(:,:,i) = 0.5*Nt*abs(Cb');
     RStrace(:,:,i) = 0.5*Nt*abs(Cs');
-    diag(B'*B)-diag(Btrace(:,:,i)'*Btrace(:,:,i))
+    diag(B'*B)-diag(Btrace(:,:,i)'*Btrace(:,:,i));
 end
 H.N = Ntrace;
 H.B = Btrace;
