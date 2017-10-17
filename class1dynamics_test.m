@@ -1,9 +1,9 @@
-function H = class1dynamics_test()
+% function H = class1dynamics_test()
 clear all
 clc
 format long
 % class 1 dynamics 
-[N,Cb,Cs] = tenseg_prismplate(1,1);
+[N,Cb,Cs] = tenseg_prismplate(1,0.8);
 Cb = full(Cb);
 Cs = full(Cs);
 %% external force on the structure
@@ -17,13 +17,14 @@ b0 = diag(diag(B'*B));
 
 %% simulation
 tf = 1;
-dt = 0.01;
+dt = 0.02;
 t = 0:dt:tf;
 Nd = 0.*N;
 x0 = [N Nd];
-Inp.Cs = Cs; Inp.Cb=Cb; Inp.W=W; Inp.s0=s0; Inp.b0=b0;Inp.tf=tf;
+Inp.Cs = Cs; Inp.Cb=Cb; Inp.W=W; Inp.s0=s0; Inp.b0=b0;Inp.tf=tf;Inp.m=1;
+figure
 y = ode4(@dyn_class_1,t,x0,Inp);
-
+hold off
 for i = 1:size(y,1)
     XN = (y(i,1:size(y,2)/2));
     Nt = reshape(XN,3,size(Cb,2));
@@ -32,15 +33,15 @@ for i = 1:size(y,1)
     Strace(:,:,i) = Nt*Cs';
     RBtrace(:,:,i) = 0.5*Nt*abs(Cb');
     RStrace(:,:,i) = 0.5*Nt*abs(Cs');
-    diag(B'*B)-diag(Btrace(:,:,i)'*Btrace(:,:,i));
+%     diag(B'*B)-diag(Btrace(:,:,i)'*Btrace(:,:,i))
 end
-H.N = Ntrace;
-H.B = Btrace;
-H.S = Strace;
-H.RB = RBtrace;
-H.RS = RStrace;
-H.tf = tf;
-H.dt = t;
-
-end
+% H.N = Ntrace;
+% H.B = Btrace;
+% H.S = Strace;
+% H.RB = RBtrace;
+% H.RS = RStrace;
+% H.tf = tf;
+% H.dt = t;
+% 
+% end
 
